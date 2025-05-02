@@ -18,11 +18,9 @@ services:
       - '--web.listen-address=0.0.0.0:9440'
     restart: "no"
 
-    # Expose this container's port 9440 on port 9440
     ports:
       - "9440:9440"
 
-    # Assign a meaningful name to this service using 'container_name'
     container_name: ebpf-exporter
 
   node-exporter:
@@ -43,11 +41,9 @@ services:
     cap_add:
     - SYS_TIME
 
-    # Expose this container's port 9441 on port 9441
     ports:
       - "9441:9441"
 
-    # Assign a meaningful name to this service using 'container_name'
     container_name: node-exporter
 
 
@@ -56,7 +52,6 @@ services:
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
-      # Additionally mount these (same path inside the container) as read-only: /var/lib/docker, /dev/disk, /sys
       - /var/lib/docker:/var/lib/docker:ro
       - /dev/disk:/dev/disk:ro
       - /sys:/sys:ro
@@ -71,11 +66,9 @@ services:
     privileged: true
     restart: "no"
 
-    # Expose this container's port 9442 on port 9442
     ports:
       - "9442:9442"
 
-    # Assign a meaningful name to this service using 'container_name'
     container_name: cadvisor
 
 
@@ -97,14 +90,11 @@ services:
     depends_on:
       - prometheus
 
-    # Expose this container's port 9091 on port 9091
     ports:
       - "9091:9091"
 
-    # Assign a meaningful name to this service using 'container_name'
     container_name: grafana
 
-    # Allow this container to use at most two cores
     deploy:
       resources:
         limits:
@@ -127,15 +117,12 @@ services:
     user: "${CURRENT_UID}"
     restart: "no"
 
-    # Ensure that this service start only after cadvisor, node-exporter, and ebpf-exporter
     depends_on:
       - ebpf-exporter
       - node-exporter
       - cadvisor
 
-    # Expose this container's port 9090 on port 9090
     ports:
       - "9090:9090"
 
-    # Assign a meaningful name to this service using 'container_name'
     container_name: prometheus

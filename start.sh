@@ -40,7 +40,6 @@ cd ..
 # Starting all services
 CURRENT_UID=$(id -u):$(id -g) docker-compose up -d
 
-# Check if you can open these:
 echo "You may now open Ebpf_exporter at http://localhost:9440/metrics"
 echo "You may now open Node-Exporter at http://localhost:9441/metrics"
 echo "You may now open Cadvisor at http://localhost:9442/metrics"
